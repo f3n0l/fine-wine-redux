@@ -17,3 +17,4 @@ app.listen(PORT, () => {
 //implement rating
 // implement comment
 // build component for each entry / map over entries
+// implement filter && sort
