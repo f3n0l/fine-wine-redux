@@ -11,3 +11,9 @@ app.get("/api", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+// find wine api
+// implement search bar
+//implement rating
+// implement comment
+// build component for each entry / map over entries
