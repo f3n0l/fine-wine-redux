@@ -1,20 +1,77 @@
-// server/index.ts
 import express from "express";
+import axios from "axios";
+import cors from "cors";
+
+import path = require("path");
 
 const app = express();
-const PORT = 3001;
+const PORT = 5000;
 
-app.get("/api", (req, res) => {
-    res.json({ message: "Hello from the backend!" });
+app.use(cors());
+
+app.get("/", (request, response) => {
+    response.send("Hello, World!");
+});
+// Search cocktail by name
+app.get("/searchByName/:name", async (request, response) => {
+    try {
+        const apiResponse = await axios.get(
+            `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${request.params.name}`
+        );
+        response.json(apiResponse.data);
+    } catch (error) {
+        response.status(500).json({ message: "Error fetching data." });
+    }
+});
+
+// List all cocktails by first letter
+app.get("/listByFirstLetter/:letter", async (request, response) => {
+    try {
+        const apiResponse = await axios.get(
+            `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${request.params.letter}`
+        );
+        response.json(apiResponse.data);
+    } catch (error) {
+        response.status(500).json({ message: "Error fetching data." });
+    }
+});
+
+// Search ingredient by name
+app.get("/searchIngredient/:name", async (request, response) => {
+    try {
+        const apiResponse = await axios.get(
+            `https://www.thecocktaildb.com/api/json/v1/1/search.php?i=${request.params.name}`
+        );
+        response.json(apiResponse.data);
+    } catch (error) {
+        response.status(500).json({ message: "Error fetching data." });
+    }
+});
+
+// Lookup full cocktail details by id
+app.get("/lookupCocktail/:id", async (request, response) => {
+    try {
+        const apiResponse = await axios.get(
+            `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${request.params.id}`
+        );
+        response.json(apiResponse.data);
+    } catch (error) {
+        response.status(500).json({ message: "Error fetching data." });
+    }
+});
+
+// Lookup a random cocktail
+app.get("/randomCocktail", async (request, response) => {
+    try {
+        const apiResponse = await axios.get(
+            `https://www.thecocktaildb.com/api/json/v1/1/random.php`
+        );
+        response.json(apiResponse.data);
+    } catch (error) {
+        response.status(500).json({ message: "Error fetching data." });
+    }
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server started on http://localhost:${PORT}`);
 });
-
-// find wine api
-// implement search bar
-//implement rating
-// implement comment
-// build component for each entry / map over entries
-// implement filter && sort

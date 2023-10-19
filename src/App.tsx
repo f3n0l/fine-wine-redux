@@ -1,8 +1,8 @@
 import "./App.css";
-import Counter from "./components/Counter"; // Import the Counter component
+import CocktailSearch from "./components/CocktailSearch"; // Import the Counter component
 
 function App() {
-    return <Counter />;
+    return <CocktailSearch />;
 }
 
 export default App;
