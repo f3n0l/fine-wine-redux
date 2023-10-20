@@ -1,7 +1,7 @@
 // src/components/CocktailList.tsx
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCocktails } from "../features/cocktailsSlice";
+import { fetchCocktails } from "../features/cocktailSlice";
 import { Cocktail } from "../types/Cocktails";
 import { RootState } from "../types/ReduxState";
 import CocktailItem from "./CocktailItem";
@@ -32,3 +32,5 @@ const CocktailsList: React.FC = () => {
 };
 
 export default CocktailsList;
+
+//fix type error

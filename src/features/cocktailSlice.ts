@@ -30,3 +30,5 @@ const cocktailsSlice = createSlice({
 });
 
 export default cocktailsSlice.reducer;
+
+//fix type.errror
