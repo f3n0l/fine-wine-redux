@@ -6,7 +6,7 @@ const app = express();
 const PORT = 5000;
 
 const corsOptions = {
-    origin: "http://localhost:5000", // Replace with your Vite development server URL
+    origin: "http://localhost:5000",
 };
 
 app.use(cors(corsOptions));
