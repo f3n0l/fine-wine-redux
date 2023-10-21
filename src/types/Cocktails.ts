@@ -4,6 +4,7 @@ export interface Cocktail {
     strDrinkAlternate: string | null;
     strTags: string | null;
     strVideo: string | null;
+
     strCategory: string;
     strIBA: string | null;
     strAlcoholic: string;
@@ -14,6 +15,7 @@ export interface Cocktail {
     strIngredient1: string;
     strMeasure1: string;
     error?: string;
+    searchResults?: Cocktail[];
 }
 
 export interface CocktailApiResponse {

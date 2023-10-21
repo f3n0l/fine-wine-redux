@@ -5,13 +5,17 @@ import cors from "cors";
 const app = express();
 const PORT = 5000;
 
-app.use(cors());
+const corsOptions = {
+    origin: "http://localhost:5000", // Replace with your Vite development server URL
+};
+
+app.use(cors(corsOptions));
 
 app.get("/", (request, response) => {
     response.send("Hello, World!");
 });
 // Search cocktail by name
-app.get("/searchByName/:name", async (request, response) => {
+app.get("/api/searchByName/:name", async (request, response) => {
     try {
         const apiResponse = await axios.get(
             `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${request.params.name}`
@@ -59,12 +63,13 @@ app.get("/lookupCocktail/:id", async (request, response) => {
 });
 
 // Lookup a random cocktail
-app.get("/randomCocktail", async (request, response) => {
+app.get("/api/randomCocktail", async (request, response) => {
     try {
         const apiResponse = await axios.get(
             `https://www.thecocktaildb.com/api/json/v1/1/random.php`
         );
         response.json(apiResponse.data);
+        console.log(apiResponse.data.drinks[0]);
     } catch (error) {
         response.status(500).json({ message: "Error fetching data." });
     }

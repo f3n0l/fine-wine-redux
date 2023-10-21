@@ -1,17 +1,22 @@
-// src/components/CocktailList.tsx
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCocktails } from "../features/cocktailSlice";
 import { Cocktail } from "../types/Cocktails";
 import { RootState } from "../types/ReduxState";
 import CocktailItem from "./CocktailItem";
+import { AppDispatch } from "../store/store";
 
 const CocktailsList: React.FC = () => {
-    const dispatch = useDispatch();
-    const cocktails = useSelector(
-        (state: RootState) => state.cocktails.cocktails
+    const cocktails = useSelector((state: RootState) =>
+        state.cocktails.searchResults.length > 0
+            ? state.cocktails.searchResults
+            : state.cocktails.cocktails
     );
+
     const status = useSelector((state: RootState) => state.cocktails.status);
+    const dispatch = useDispatch<AppDispatch>();
+
+    const [searchResults, setSearchResults] = useState<Cocktail[]>([]);
 
     useEffect(() => {
         if (status === "idle") {
@@ -23,9 +28,19 @@ const CocktailsList: React.FC = () => {
         <div>
             {status === "loading" && <p>Loading...</p>}
             {status === "succeeded" &&
-                cocktails.map((cocktail: Cocktail) => (
-                    <CocktailItem key={cocktail.idDrink} cocktail={cocktail} />
-                ))}
+                (searchResults.length > 0
+                    ? searchResults.map((cocktail: Cocktail) => (
+                          <CocktailItem
+                              key={cocktail.idDrink}
+                              cocktail={cocktail}
+                          />
+                      ))
+                    : cocktails.map((cocktail: Cocktail) => (
+                          <CocktailItem
+                              key={cocktail.idDrink}
+                              cocktail={cocktail}
+                          />
+                      )))}
             {status === "failed" && <p>Error loading cocktails.</p>}
         </div>
     );

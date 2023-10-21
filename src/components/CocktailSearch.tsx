@@ -1,42 +1,71 @@
 import React, { useState } from "react";
-
-type Drink = {
-    idDrink: string;
-    strDrink: string;
-    strDrinkThumb: string;
-    [key: string]: string; // This allows us to access other properties without being explicit about them.
-};
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchResults, searchResults } from "../features/cocktailSlice";
+import { RootState } from "../types/ReduxState";
+import { Cocktail } from "../types/Cocktails";
 
 type DrinkResponse = {
-    drinks: Drink[];
+    drinks: Cocktail[];
 };
 
 const CocktailSearch: React.FC = () => {
+    const dispatch = useDispatch();
     const [searchTerm, setSearchTerm] = useState<string>("");
-    const [results, setResults] = useState<Drink[]>([]);
+    const searchResults = useSelector(
+        (state: RootState) => state.cocktails.searchResults
+    );
 
     const searchByName = async () => {
-        const response = await fetch(`/searchByName/${searchTerm}`);
-        const data: DrinkResponse = await response.json();
-        setResults(data.drinks || []);
+        try {
+            const response = await fetch(`/searchByName/${searchTerm}`);
+            const data: DrinkResponse = await response.json();
+            dispatch(
+                setSearchResults.actions.setSearchResults(data.drinks || [])
+            );
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
     };
 
     const searchByFirstLetter = async () => {
-        const response = await fetch(`/listByFirstLetter/${searchTerm}`);
-        const data: DrinkResponse = await response.json();
-        setResults(data.drinks || []);
+        try {
+            const response = await fetch(`/listByFirstLetter/${searchTerm}`);
+            const data: DrinkResponse = await response.json();
+            dispatch(
+                setSearchResults.actions.setSearchResults(data.drinks || [])
+            );
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
     };
 
     const searchByIngredient = async () => {
-        const response = await fetch(`/searchIngredient/${searchTerm}`);
-        const data: DrinkResponse = await response.json();
-        setResults(data.drinks || []);
+        try {
+            const response = await fetch(`/searchIngredient/${searchTerm}`);
+            const data: DrinkResponse = await response.json();
+            dispatch(
+                setSearchResults.actions.setSearchResults(data.drinks || [])
+            );
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
     };
 
     const getRandomCocktail = async () => {
-        const response = await fetch("/randomCocktail");
-        const data: DrinkResponse = await response.json();
-        setResults([data.drinks[0]]);
+        try {
+            const response = await fetch("/api/randomCocktail");
+            const responseData = await response.text();
+
+            if (responseData.trim() === "") {
+                console.error("Empty Response");
+                return;
+            }
+
+            const data = JSON.parse(responseData);
+            console.log("Parsed Data:", data);
+        } catch (error) {
+            console.error("Fetch Error:", error);
+        }
     };
 
     return (
@@ -52,7 +81,7 @@ const CocktailSearch: React.FC = () => {
             <button onClick={getRandomCocktail}>Get Random Cocktail</button>
 
             <ul>
-                {results.map((drink) => (
+                {searchResults.map((drink) => (
                     <li key={drink.idDrink}>
                         <h3>{drink.strDrink}</h3>
                         <img src={drink.strDrinkThumb} alt={drink.strDrink} />
