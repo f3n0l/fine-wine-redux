@@ -4,7 +4,7 @@ import { fetchCocktails } from "../features/cocktailSlice";
 import { Cocktail } from "../types/Cocktails";
 import { RootState } from "../types/ReduxState";
 import CocktailItem from "./CocktailItem";
-import { AppDispatch } from "../store/store";
+import { AppDispatch } from "../store/store"; // Updated import
 
 const CocktailsList: React.FC = () => {
     const cocktails = useSelector((state: RootState) =>
@@ -14,9 +14,9 @@ const CocktailsList: React.FC = () => {
     );
 
     const status = useSelector((state: RootState) => state.cocktails.status);
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useDispatch<AppDispatch>(); // Correct type for dispatch
 
-    const [searchResults, setSearchResults] = useState<Cocktail[]>([]);
+    const [searchResults] = useState<Cocktail[]>([]);
 
     useEffect(() => {
         if (status === "idle") {
@@ -47,5 +47,3 @@ const CocktailsList: React.FC = () => {
 };
 
 export default CocktailsList;
-
-//fix type error

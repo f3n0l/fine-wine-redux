@@ -21,3 +21,7 @@ export interface Cocktail {
 export interface CocktailApiResponse {
     drinks: Cocktail[];
 }
+
+export interface DrinkResponse {
+    drinks: Cocktail[];
+}

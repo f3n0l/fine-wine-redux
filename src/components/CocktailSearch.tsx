@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchResults, searchResults } from "../features/cocktailSlice";
+import { setSearchResults } from "../features/cocktailSlice";
 import { RootState } from "../types/ReduxState";
 import { Cocktail } from "../types/Cocktails";
 
@@ -19,21 +19,18 @@ const CocktailSearch: React.FC = () => {
         try {
             const response = await fetch(`/searchByName/${searchTerm}`);
             const data: DrinkResponse = await response.json();
-            dispatch(
-                setSearchResults.actions.setSearchResults(data.drinks || [])
-            );
+
+            // Dispatch setSearchResults to update search results
+            dispatch(setSearchResults(data.drinks || []));
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     };
-
     const searchByFirstLetter = async () => {
         try {
             const response = await fetch(`/listByFirstLetter/${searchTerm}`);
             const data: DrinkResponse = await response.json();
-            dispatch(
-                setSearchResults.actions.setSearchResults(data.drinks || [])
-            );
+            dispatch(setSearchResults(data.drinks || []));
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -43,9 +40,7 @@ const CocktailSearch: React.FC = () => {
         try {
             const response = await fetch(`/searchIngredient/${searchTerm}`);
             const data: DrinkResponse = await response.json();
-            dispatch(
-                setSearchResults.actions.setSearchResults(data.drinks || [])
-            );
+            dispatch(setSearchResults(data.drinks || []));
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -62,7 +57,7 @@ const CocktailSearch: React.FC = () => {
             }
 
             const data = JSON.parse(responseData);
-            console.log("Parsed Data:", data);
+            console.log("Parsed Data:", data.drinks[0]);
         } catch (error) {
             console.error("Fetch Error:", error);
         }
@@ -81,7 +76,7 @@ const CocktailSearch: React.FC = () => {
             <button onClick={getRandomCocktail}>Get Random Cocktail</button>
 
             <ul>
-                {searchResults.map((drink) => (
+                {searchResults.map((drink: Cocktail) => (
                     <li key={drink.idDrink}>
                         <h3>{drink.strDrink}</h3>
                         <img src={drink.strDrinkThumb} alt={drink.strDrink} />

@@ -15,7 +15,7 @@ app.get("/", (request, response) => {
     response.send("Hello, World!");
 });
 // Search cocktail by name
-app.get("/api/searchByName/:name", async (request, response) => {
+app.get("/searchByName/:name", async (request, response) => {
     try {
         const apiResponse = await axios.get(
             `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${request.params.name}`

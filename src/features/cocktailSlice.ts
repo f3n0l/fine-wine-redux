@@ -12,7 +12,7 @@ const initialState: CocktailsState = {
     cocktails: [],
     status: "idle",
     error: null,
-    searchResults: [], // Add this property
+    searchResults: [], // Initialize the searchResults property
 };
 
 export const fetchCocktails = createAsyncThunk(
@@ -26,7 +26,11 @@ export const fetchCocktails = createAsyncThunk(
 export const cocktailsSlice = createSlice({
     name: "cocktails",
     initialState,
-    reducers: {},
+    reducers: {
+        setSearchResults: (state, action) => {
+            state.searchResults = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchCocktails.pending, (state) => {
@@ -43,17 +47,7 @@ export const cocktailsSlice = createSlice({
     },
 });
 
-// With this line
-export const setSearchResultsAction = createSlice({
-    name: "searchResults",
-    initialState,
-    reducers: {
-        setSearchResults: (state, action) => {
-            state.searchResults = action.payload;
-        },
-    },
-});
-
-export const { setSearchResults } = setSearchResultsAction.actions;
+// Export a setSearchResults action using createSlice
+export const { setSearchResults } = cocktailsSlice.actions;
 
 export default cocktailsSlice.reducer;

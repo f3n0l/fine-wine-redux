@@ -1,16 +1,17 @@
-import { configureStore } from "@reduxjs/toolkit";
+// store.ts
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import cocktailsReducer from "../features/cocktailSlice";
+import searchReducer from "../features/searchSlice"; // Import your searchReducer
 
-import { AnyAction } from "@reduxjs/toolkit";
-import { ThunkDispatch } from "redux-thunk";
-import { RootState } from "../types/ReduxState";
-
-const store = configureStore({
-    reducer: {
-        cocktails: cocktailsReducer,
-    },
+const rootReducer = combineReducers({
+    cocktails: cocktailsReducer,
+    search: searchReducer, // Include the search reducer
 });
 
-export type AppDispatch = typeof store.dispatch &
-    ThunkDispatch<RootState, unknown, AnyAction>;
+const store = configureStore({
+    reducer: rootReducer,
+});
+
+export type AppDispatch = typeof store.dispatch;
 export default store;
+export type RootState = ReturnType<typeof rootReducer>; // Define RootState
