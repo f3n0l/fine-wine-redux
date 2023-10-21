@@ -13,6 +13,7 @@ export interface Cocktail {
     strDrinkThumb: string;
     strIngredient1: string;
     strMeasure1: string;
+    error?: string;
 }
 
 export interface CocktailApiResponse {
