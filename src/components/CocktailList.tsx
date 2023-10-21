@@ -4,7 +4,7 @@ import { fetchCocktails } from "../features/cocktailSlice";
 import { Cocktail } from "../types/Cocktails";
 import { RootState } from "../types/ReduxState";
 import CocktailItem from "./CocktailItem";
-import { AppDispatch } from "../store/store"; // Updated import
+import { AppDispatch } from "../store/store";
 
 const CocktailsList: React.FC = () => {
     const cocktails = useSelector((state: RootState) =>
@@ -14,7 +14,7 @@ const CocktailsList: React.FC = () => {
     );
 
     const status = useSelector((state: RootState) => state.cocktails.status);
-    const dispatch = useDispatch<AppDispatch>(); // Correct type for dispatch
+    const dispatch = useDispatch<AppDispatch>();
 
     const [searchResults] = useState<Cocktail[]>([]);
 

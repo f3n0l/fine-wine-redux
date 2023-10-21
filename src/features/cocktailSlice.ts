@@ -5,14 +5,14 @@ interface CocktailsState {
     cocktails: Cocktail[];
     status: "idle" | "loading" | "succeeded" | "failed";
     error: string | null;
-    searchResults: Cocktail[]; // Add this property
+    searchResults: Cocktail[];
 }
 
 const initialState: CocktailsState = {
     cocktails: [],
     status: "idle",
     error: null,
-    searchResults: [], // Initialize the searchResults property
+    searchResults: [],
 };
 
 export const fetchCocktails = createAsyncThunk(
@@ -47,7 +47,6 @@ export const cocktailsSlice = createSlice({
     },
 });
 
-// Export a setSearchResults action using createSlice
 export const { setSearchResults } = cocktailsSlice.actions;
 
 export default cocktailsSlice.reducer;

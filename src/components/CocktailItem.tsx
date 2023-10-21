@@ -11,7 +11,6 @@ const CocktailItem: React.FC<CocktailItemProps> = ({ cocktail }) => {
             <h2>{cocktail.strDrink}</h2>
             <img src={cocktail.strDrinkThumb} alt={cocktail.strDrink} />
             <p>{cocktail.strInstructions}</p>
-            {/* You can further iterate through ingredients and measures to display them */}
         </div>
     );
 };
