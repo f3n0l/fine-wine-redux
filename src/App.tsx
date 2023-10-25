@@ -1,12 +1,15 @@
 import "./App.css";
 import CocktailsList from "./components/CocktailList";
-import CocktailSearch from "./components/CocktailSearch"; // Import the Counter component
-
+import CocktailSearch from "./components/CocktailSearch";
+import { Provider } from "react-redux";
+import store from "./store/store";
 function App() {
     return (
         <div>
-            <CocktailSearch />
-            <CocktailsList />
+            <Provider store={store}>
+                <CocktailSearch />
+                <CocktailsList />{" "}
+            </Provider>
         </div>
     );
 }
