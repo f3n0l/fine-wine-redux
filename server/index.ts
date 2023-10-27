@@ -78,3 +78,5 @@ app.get("/api/randomCocktail", async (request, response) => {
 app.listen(PORT, () => {
     console.log(`Server started on http://localhost:${PORT}`);
 });
+
+// Path: client/src/App.tsx
